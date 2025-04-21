@@ -1,1 +1,360 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fainancial - Full Dashboard & Input</title>
+  <style>
+#splash-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #ffdde1, #fcb0b3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeOut 2s ease-in-out 2.5s forwards;
+}
+
+.splash-content {
+  text-align: center;
+  color: #b30059;
+  font-size: 1.3em;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.splash-content h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; visibility: hidden; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h2 {
+      background: #4CAF50;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 1.2em;
+    }
+    select, input, button {
+      width: 100%;
+      margin: 8px 0;
+      padding: 12px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    button {
+      cursor: pointer;
+      background: #4CAF50;
+      color: white;
+      border: none;
+    }
+    button.hapus {
+      background: #f44336;
+    }
+    button:hover {
+      opacity: 0.95;
+    }
+    .nav-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .dash-item {
+      display: none;
+      margin-top: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.95em;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 6px;
+      text-align: center;
+    }
+    th {
+      background: #eee;
+    }
+    progress {
+      width: 100%;
+      height: 24px;
+    }
+    canvas {
+      max-width: 100%;
+    }
+    @media (max-width: 600px) {
+      body {
+        padding: 15px;
+      }
+      table, th, td {
+        font-size: 0.85em;
+      }
+      .nav-buttons button {
+        width: 100%;
+        font-size: 0.95em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="splash-screen">
+  <div class="splash-content">
+    <h1>💖 Fainancial</h1>
+    <p id="romantic-quote"></p>
+  </div>
+</div>
+
+  <div class="nav-buttons">
+    <button onclick="showSection('form')">📥 Form Input</button>
+    <button onclick="showSection('dashboard')">📊 Dashboard</button>
+  </div>
+
+  <!-- Form Input -->
+  <div id="form" style="display:block;">
+    <h2>💸 Tambah Pengeluaran</h2>
+    <form id="formTambah">
+      <label>Bulan:</label>
+      <select name="bulan">
+        <option>January</option><option>February</option><option>March</option><option>April</option>
+        <option>May</option><option>June</option><option>July</option><option>August</option>
+        <option>September</option><option>October</option><option>November</option><option>December</option>
+      </select>
+      <label>Tahun:</label>
+      <select name="tahun">
+        <option>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option>
+      </select>
+      <label>Kategori:</label>
+      <select name="kategori">
+        <option>Kosan</option><option>Kebutuhan Pokok</option><option>Transportasi</option><option>Tabungan Menikah</option>
+        <option>Investasi Umum</option><option>Dana Darurat</option><option>Hiburan & Sosial</option><option>Pendidikan/Skill</option>
+      </select>
+      <label>Jumlah:</label>
+      <input type="number" name="jumlah" required />
+      <button type="submit">✅ Tambah</button>
+    </form>
+
+    <h2>🧼 Hapus Pengeluaran</h2>
+    <form id="formHapus">
+    <button type="button" onclick="resetAllData()" style="background:#ff9800; color:white; margin-top:10px;">♻️ Reset All Data</button>
+      <label>Bulan:</label>
+      <select name="bulan">
+        <option>January</option><option>February</option><option>March</option><option>April</option>
+        <option>May</option><option>June</option><option>July</option><option>August</option>
+        <option>September</option><option>October</option><option>November</option><option>December</option>
+      </select>
+      <label>Tahun:</label>
+      <select name="tahun">
+        <option>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option>
+      </select>
+      <label>Kategori:</label>
+      <select name="kategori">
+        <option>Kosan</option><option>Kebutuhan Pokok</option><option>Transportasi</option><option>Tabungan Menikah</option>
+        <option>Investasi Umum</option><option>Dana Darurat</option><option>Hiburan & Sosial</option><option>Pendidikan/Skill</option>
+      </select>
+      <button type="submit" class="hapus">❌ Hapus</button>
+    </form>
+    <p id="responseArea"></p>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard" style="display:none;">
+    <h2>📊 Dashboard Keuangan</h2>
+    <div class="nav-buttons">
+      <button onclick="showDashboard('rekap')">1️⃣ Rekap Tahunan</button>
+      <button onclick="showDashboard('sisa')">2️⃣ Sisa Tahunan</button>
+      <button onclick="showDashboard('netto')">3️⃣ Netto</button>
+      <button onclick="showDashboard('nikah')">4️⃣ Target Menikah</button>
+      <button onclick="showDashboard('grafik')">5️⃣ Grafik Tahunan</button>
+    </div>
+
+    <div id="rekap" class="dash-item">
+      <h3>1️⃣ Rekap Tahunan</h3>
+      <label for="filterTahun">Filter Tahun:</label>
+      <select id="filterTahun" onchange="filterRekapTahunan()">
+        <option value="all">Semua</option>
+        <option value="2025">2025</option>
+        <option value="2026">2026</option>
+        <option value="2027">2027</option>
+        <option value="2028">2028</option>
+        <option value="2029">2029</option>
+      </select>
+      <div id="rekap-tahunan"><em>Loading...</em></div>
+    </div>
+
+    <div id="sisa" class="dash-item"><h3>2️⃣ Sisa Tahunan</h3><div id="rekap-sisa"><em>Loading...</em></div></div>
+    <div id="netto" class="dash-item"><h3>3️⃣ Rekap Netto</h3><div id="rekap-netto"><em>Loading...</em></div></div>
+    <div id="nikah" class="dash-item"><h3>4️⃣ Target Menikah</h3><div id="progres-menikah"><em>Loading...</em></div></div>
+    <div id="grafik" class="dash-item"><h3>5️⃣ Grafik Keuangan</h3><canvas id="chartKeuangan"></canvas></div>
+  </div>
+
+  <!-- Script -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const execURL = "https://script.google.com/macros/s/AKfycbyU-ddmlnSOTsfEME7SfMJ_RPKLzmH7hLjynq4QeU2v5WBl2qYrxrlxTNaXSthHc3kW/exec";
+    const syncURL = "https://script.google.com/macros/s/AKfycbyU-ddmlnSOTsfEME7SfMJ_RPKLzmH7hLjynq4QeU2v5WBl2qYrxrlxTNaXSthHc3kW/exec";
+
+    let dataRekapGlobal = [];
+
+    document.getElementById("formTambah").onsubmit = e => {
+      e.preventDefault();
+      fetch(execURL, {
+        method: "POST",
+        body: new FormData(e.target)
+      }).then(res => res.text())
+        .then(txt => document.getElementById("responseArea").innerText = "✅ Tambah: " + txt)
+        .catch(err => document.getElementById("responseArea").innerText = "❌ Error: " + err);
+    };
+
+    document.getElementById("formHapus").onsubmit = e => {
+      e.preventDefault();
+      const data = new URLSearchParams(new FormData(e.target));
+      data.append("aksi", "hapus");
+      fetch(execURL + "?" + data.toString())
+        .then(res => res.text())
+        .then(txt => document.getElementById("responseArea").innerText = "🧼 Hapus: " + txt)
+        .catch(err => document.getElementById("responseArea").innerText = "❌ Error: " + err);
+    };
+
+    function showSection(id) {
+      document.getElementById("form").style.display = id === "form" ? "block" : "none";
+      document.getElementById("dashboard").style.display = id === "dashboard" ? "block" : "none";
+    }
+
+    function showDashboard(id) {
+      document.querySelectorAll('.dash-item').forEach(el => el.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+    }
+
+    function renderTable(id, rows) {
+      if (!rows || rows.length < 2) return;
+      if (id === "rekap-tahunan") dataRekapGlobal = rows;
+      let html = "<table><tr>" + rows[0].map(x => `<th>${x}</th>`).join("") + "</tr>";
+      for (let i = 1; i < rows.length; i++) {
+        html += "<tr>" + rows[i].map(x => `<td>${x}</td>`).join("") + "</tr>";
+      }
+      html += "</table>";
+      document.getElementById(id).innerHTML = html;
+    }
+
+    function filterRekapTahunan() {
+      const tahun = document.getElementById("filterTahun").value;
+      const header = dataRekapGlobal[0];
+      const filtered = tahun === "all"
+        ? dataRekapGlobal
+        : [header, ...dataRekapGlobal.slice(1).filter(row => row[0] == tahun)];
+      renderTable("rekap-tahunan", filtered);
+    }
+
+    function renderMenikah(data) {
+      const jumlah = Number(data[6][1]);
+      const persen = Math.round(Number(data[6][3]));
+      document.getElementById("progres-menikah").innerHTML = `
+        <p>💍 Terkumpul: Rp${jumlah.toLocaleString()} (${persen}%)</p>
+        <progress value="${persen}" max="100"></progress>
+      `;
+    }
+    function resetAllData() {
+      if (confirm("⚠️ Apakah kamu yakin ingin menghapus semua data tahun 2025–2029? Ini tidak bisa dikembalikan!")) {
+       fetch(execURL + "?aksi=reset")
+       .then(res => res.text())
+       .then(txt => alert("♻️ " + txt))
+       .catch(err => alert("❌ Error saat reset: " + err));
+        }
+    }
+
+    function renderGrafik(data) {
+      const ctx = document.getElementById("chartKeuangan").getContext("2d");
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.map(row => row[0]),
+          datasets: [{
+            label: 'Total Pengeluaran',
+            data: data.map(row => Number(row[1])),
+            backgroundColor: '#4CAF50'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+    }
+
+    fetch(syncURL + "?aksi=dashboard")
+      .then(res => res.json())
+      .then(data => {
+        renderTable("rekap-tahunan", data.rekap);
+        renderTable("rekap-sisa", data.sisa);
+        renderTable("rekap-netto", data.netto);
+        renderGrafik(data.grafik);
+        renderMenikah(data.nikah);
+      });
+  </script>
+  <script>
+    // Splash screen hilang setelah 1,5 detik
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        const splash = document.getElementById("splash-screen");
+        if (splash) splash.style.display = "none";
+      }, 5000);
+    });
+  </script>
+  <script>
+    const quotes = [
+      "Cinta dan uang harus sama-sama direncanakan 💌",
+      "Menabung untuk masa depan, bersama orang tercinta 💕",
+      "Dompet aman, hati pun tenang 🧡",
+      "Keuangan sehat, cinta kuat 🌸",
+      "Rencana fainansial adalah bentuk cinta paling nyata 💖",
+      "Mimpi pernikahan dimulai dari fayjel 📊💍"
+    ];
+
+    // Tampilkan quote acak
+     document.addEventListener("DOMContentLoaded", () => {
+     const quoteElement = document.getElementById("romantic-quote");
+      if (quoteElement) {
+        const random = Math.floor(Math.random() * quotes.length);
+        quoteElement.textContent = quotes[random];
+      }
+    });
+
+    // Splash fade-out
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        const splash = document.getElementById("splash-screen");
+        if (splash) splash.style.display = "none";
+      }, 5000);
+    });
+  </script>
+
+</body>
+</html>
 
