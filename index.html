@@ -4,45 +4,106 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://dekatutorial.github.io/ct/s.js"></script>
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .login-box {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 320px;
+  }
+  .login-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  .login-box button {
+    background: #ff4b5c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .shake { animation: shake .6s; }
+  @keyframes shake {
+    0% { transform: translateX(0) }
+    20% { transform: translateX(-8px) }
+    40% { transform: translateX(8px) }
+    60% { transform: translateX(-6px) }
+    80% { transform: translateX(6px) }
+    100% { transform: translateX(0) }
+  }
+  </style>
  </head>
  <body>
-  <script> 
+  <div class="login-box" id="loginBox">
+  <h2>Login dulu ya 😘</h2>
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="checkLogin()">Masuk</button>
+  <small>Hint: username : nama kita, password : tanggal spesial 💕</small>
+  </div>
+  <script>
+  const myWA = "6282185258676"; // nomor kamu
 
-teksHai = "Hai, ada surat buat kamu nih";
-    
-konten = [
-  { gambar: "gambar1.gif", 
-    ucapan: "Hai sayang 💖" 
-  },
-  { gambar: "gambar2.gif", 
-    ucapan: "Selamat ulang tahun 🎂🥳" 
-  },
-  { gambar: "gambar3.gif", 
-   ucapan: "Semoga sehat selalu ✨" 
-  },
-  { gambar: "gambar4.gif", 
-   ucapan: "Makin cantik tiap hari 😘" 
-  },
-  { gambar: "gambar5.gif", 
-   ucapan: "Doa terbaik buat kamu 💕" 
-  },
-  { gambar: "gambar6.gif", 
-   ucapan: "Semoga semua impianmu tercapai 🌈" 
-  },
-  { gambar: "gambar7.gif", 
-   ucapan: "Love you always ❤️" 
-  },
-  { gambar: "gambar8.jpg", 
-   ucapan: "Kirim doa ke aku ya lewat tombol di bawah 🙏" 
-  },
-];
+  function checkLogin() {
+    const user = document.getElementById("username").value.trim().toLowerCase();
+    const pass = document.getElementById("password").value.trim();
 
-musik = "music1.mp3";
-nomorWhatsapp = "6282185258676";
+    const validUser = "fayjel"; // username kamu
+    const validPass = "19092004";      // password kamu
 
-/*=========================*/
-DekaTutorial(konten, musik, nomorWhatsapp);
-</script></body></html>
+    if (user === validUser && pass === validPass) {
+      document.getElementById("loginBox").style.display = "none";
+      mulaiUcapan();
+    } else {
+      // efek goyang
+      const box = document.getElementById("loginBox");
+      box.classList.add("shake");
+      setTimeout(() => box.classList.remove("shake"), 650);
+
+      // buka WA otomatis
+      const pesan = encodeURIComponent("Passwordnya salah mas, apa pass nya?");
+      const waUrl = `https://wa.me/${myWA}?text=${pesan}`;
+      setTimeout(() => { window.open(waUrl, "_blank"); }, 700);
+    }
+  }
+
+  function mulaiUcapan(){
+    teksHai = "Hai, ada surat buat kamu nih 💌";
+
+    konten = [
+      { gambar: "gambar1.gif", ucapan: "Hai sayang 💖" },
+      { gambar: "gambar2.gif", ucapan: "Selamat ulang tahun 🎂🥳" },
+      { gambar: "gambar3.gif", ucapan: "Semoga sehat selalu ✨" },
+      { gambar: "gambar4.gif", ucapan: "Makin cantik tiap hari 😘" },
+      { gambar: "gambar5.gif", ucapan: "Doa terbaik buat kamu 💕" },
+      { gambar: "gambar6.gif", ucapan: "Semoga semua impianmu tercapai 🌈" },
+      { gambar: "gambar7.gif", ucapan: "Love you always ❤️" },
+      { gambar: "gambar8.jpg", ucapan: "Kirim doa ke aku ya lewat tombol di bawah 🙏" },
+    ];
+
+    musik = "music1.mp3";
+    nomorWhatsapp = "6282185258676";
+
+    DekaTutorial(konten, musik, nomorWhatsapp);
+  }
+  </script></body></html>
 amaFileGambar/Foto",
     ucapan: "UcapanKalian",
   },
